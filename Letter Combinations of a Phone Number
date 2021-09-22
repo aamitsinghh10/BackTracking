@@ -1,0 +1,26 @@
+ void solve(string digits,string op,vector<string> &res,int index)
+    {
+        vector<string> v={"abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        if(index==digits.size())
+        {
+            res.push_back(op);
+            return;
+        }
+        for(auto c:v[digits[index]-'2'])
+        {
+            op.push_back(c);
+            solve(digits,op,res,index+1);
+            op.pop_back();
+        }
+        
+    }
+    vector<string> letterCombinations(string digits)
+    {
+        if(digits=="")
+            return {};
+        string op="";
+        vector<string> res;
+        solve(digits,op,res,0);
+        
+        return res;
+    }
