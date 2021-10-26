@@ -1,0 +1,50 @@
+class Solution {
+public:
+    int solve(vector<string> & words,vector<int> &freq, vector<int> &score,int index)
+    {
+        if(index==words.size())//when reached to last word length
+            return 0;
+        
+        // when word is not included, then score of curr word is not added to ans
+        
+        int score_no=0+solve(words,freq,score,index+1);
+        
+        //when word is included
+        int sword=0;//score of word
+        string word=words[index];
+        bool flag=true;//true if word can be added
+        
+        for(int i=0;i<word.size();i++)
+        {
+            char ch=word[i];
+            
+            if(freq[ch-'a']==0)//when the freq becomes zero
+            {
+                flag=false;
+            }
+            freq[ch-'a']--;//freq of current character which is included is decremented by one
+            sword+=score[ch-'a'];
+        }
+        int score_yes=0;
+        if(flag==true)//when score can be added to solve
+        {
+            score_yes=sword+solve(words,freq,score,index+1);
+        }
+        for(int i=0;i<word.length();i++)//backtrack to check other combination of words
+        {
+            char ch=word[i];
+            freq[ch-'a']++;
+        }
+     return max(score_no,score_yes);//return max
+    }
+    int maxScoreWords(vector<string>& words, vector<char>& letters, vector<int>& score) 
+    {
+        vector<int> freq(26,0);
+        
+        for(int i=0;i<letters.size();i++)
+        {
+            freq[letters[i]-'a']++;
+        }
+        return solve(words,freq,score,0);
+    }
+};
