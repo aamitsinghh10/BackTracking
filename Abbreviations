@@ -1,0 +1,36 @@
+void Solve(string str, string ans_so_far, int count, int pos)
+{
+   if(count==str.length()) //when the size of count and length equal
+   {
+       if(count==0)//when count is 0 ,we simply include it on ans
+       { 
+           cout<< ans_so_far<< "";
+       }
+       else
+       {
+           cout<< ans_so_far+count;  //when count is not zero then we return ans string and current count
+       }
+       return;
+   }
+   
+   if(count>0)
+   {
+       solve(str,ans_so_far + count +str[pos], 0, pos+1);//when the count is greater than 0 include that in the ans string with count and curr position character
+   }
+   else
+   {
+       solve(str, ans_so_far + str[pos] ,0, pos+1);//simply include curr character in ans string
+   }
+   
+   solve(str,ans_so_far,count+1,pos+1); // when the char is not included in the ans string
+}
+
+string abbreviations(string s)
+{
+   string ans;
+   
+   ans=solve(s,"",0,0);
+   
+   return ans;
+}
+
